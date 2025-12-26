@@ -9,3 +9,8 @@
   --font-serif: "Instrument Serif", "Georgia", serif;
   --font-mono: "Geist Mono", "Geist Mono Fallback", monospace;
 }
+
+body {
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}

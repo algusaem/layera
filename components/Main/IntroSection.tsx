@@ -8,7 +8,7 @@ const IntroSection = () => {
         </h1>
 
         {/* Description */}
-        <p className="text-lg text-secondary/70">
+        <p className="text-lg text-secondary/60">
           Layera helps you discover which perfumes from your collection work
           beautifully together. Tell the AI what you are going for — a date, the
           office, a lazy Sunday — and get layering suggestions that actually

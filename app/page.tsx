@@ -1,5 +1,5 @@
 import Divider from "@/components/Divider";
-import BadgeSection from "@/components/Main/BadgeSection";
+import BadgeSection from "@/components/Main/BadgeSection/BadgeSection";
 import IntroSection from "@/components/Main/IntroSection";
 import Navbar from "@/components/Navbar";
 
