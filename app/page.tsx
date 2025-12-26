@@ -1,4 +1,5 @@
 import Divider from "@/components/Divider";
+import BadgeSection from "@/components/Main/BadgeSection";
 import IntroSection from "@/components/Main/IntroSection";
 import Navbar from "@/components/Navbar";
 
@@ -9,6 +10,8 @@ export default function Home() {
 
       <main className="w-full flex items-center flex-col">
         <IntroSection />
+        <Divider />
+        <BadgeSection />
         <Divider />
       </main>
     </div>
