@@ -1,7 +1,7 @@
 const Navbar = () => {
   return (
-    <nav className="navbar border-b border-base-content/20 mb-4 flex justify-center mx-0 px-0">
-      <div className="w-2/4 flex items-center justify-center">
+    <nav className="navbar border-b border-base-content/20 flex justify-center">
+      <div className="container mx-auto max-w-4xl px-4 flex items-center justify-center">
         {/* Left side */}
         <div className="flex-1">
           <p className="text-xl">Layera</p>
