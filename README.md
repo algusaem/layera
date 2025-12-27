@@ -8,6 +8,7 @@ Layera is an AI-powered web app for discovering and creating perfume layering co
 - React
 - TypeScript
 - Tailwind
+- DaisyUI
 - Preline
 - Prisma
 - PostgreSQL

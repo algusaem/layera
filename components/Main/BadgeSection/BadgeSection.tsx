@@ -49,9 +49,6 @@ const BadgeSection = () => {
                 Corporate Meeting
               </span>
             </div>
-            <span className="text-xs text-secondary/60 italic">
-              Confident & refined
-            </span>
           </div>
         </div>
       </div>
