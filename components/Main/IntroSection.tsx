@@ -1,9 +1,10 @@
 import Image from "next/image";
 import heroImg from "@/public/hero_image.jpg";
+import SectionContainer from "./SectionContainer";
 
 const IntroSection = () => {
   return (
-    <section className="container mx-auto max-w-6xl px-4 my-24">
+    <SectionContainer className="max-w-6xl">
       <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
         {/* Left: Content */}
         <div className="flex-1 flex flex-col gap-8">
@@ -55,7 +56,7 @@ const IntroSection = () => {
           </div>
         </div>
       </div>
-    </section>
+    </SectionContainer>
   );
 };
 

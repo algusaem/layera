@@ -1,5 +1,6 @@
 import Divider from "@/components/Divider";
 import BadgeSection from "@/components/Main/BadgeSection/BadgeSection";
+import HowItWorksSection from "@/components/Main/HowItWorksSection";
 import IntroSection from "@/components/Main/IntroSection";
 import Navbar from "@/components/Navbar";
 
@@ -12,6 +13,8 @@ export default function Home() {
         <IntroSection />
         <Divider />
         <BadgeSection />
+        <Divider />
+        <HowItWorksSection />
         <Divider />
       </main>
     </div>

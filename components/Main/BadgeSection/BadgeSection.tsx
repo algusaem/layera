@@ -4,10 +4,11 @@ import diorhomme from "@/public/dior_homme.png";
 import PerfumeBadge from "./PerfumeBadge";
 import Operator from "./Operator";
 import SectionTitle from "./SectionTitle";
+import SectionContainer from "../SectionContainer";
 
 const BadgeSection = () => {
   return (
-    <section className="container mx-auto max-w-4xl px-4 my-24">
+    <SectionContainer className="max-w-4xl">
       {/* Section Header */}
       <SectionTitle />
 
@@ -58,7 +59,7 @@ const BadgeSection = () => {
         Three fragrances, one unforgettable impression. Let Layera find your
         perfect combination.
       </p>
-    </section>
+    </SectionContainer>
   );
 };
 
