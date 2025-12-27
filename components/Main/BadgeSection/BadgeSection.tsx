@@ -55,7 +55,7 @@ const BadgeSection = () => {
       </div>
 
       {/* Subtitle */}
-      <p className="text-center text-secondary/60 mt-12 max-w-md mx-auto">
+      <p className="text-center text-secondary/40 mt-12 max-w-md mx-auto">
         Three fragrances, one unforgettable impression. Let Layera find your
         perfect combination.
       </p>
