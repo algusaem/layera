@@ -2,11 +2,12 @@ import { Menu } from "lucide-react";
 import Link from "next/link";
 
 const NavLink = ({ children, href }: { children: string; href: string }) => (
-  <li>
-    <Link href={href} className="text-lg lg:text-base">
-      {children}
-    </Link>
-  </li>
+  <Link
+    href={href}
+    className="text-lg lg:text-base hover:text-accent transition-colors"
+  >
+    {children}
+  </Link>
 );
 
 const links = [
@@ -36,19 +37,22 @@ const Navbar = () => {
 
             {/* Logo */}
             <div className="flex-1 w-full flex justify-center lg:justify-start">
-              <Link href="/" className="text-xl ">
+              <Link
+                href="/"
+                className="text-xl hover:text-accent transition-colors bg-transparent"
+              >
                 Layera
               </Link>
             </div>
 
             {/* Desktop menu */}
-            <ul className="menu menu-horizontal gap-4 hidden lg:flex">
+            <div className="hidden lg:flex gap-6">
               {links.map((link) => (
                 <NavLink key={link.href} href={link.href}>
                   {link.label}
                 </NavLink>
               ))}
-            </ul>
+            </div>
           </div>
         </nav>
       </div>
@@ -65,13 +69,13 @@ const Navbar = () => {
           <p className="text-xl mb-8">Layera</p>
 
           {/* Drawer menu */}
-          <ul className="menu gap-2 p-0">
+          <div className="flex flex-col gap-4">
             {links.map((link) => (
               <NavLink key={link.href} href={link.href}>
                 {link.label}
               </NavLink>
             ))}
-          </ul>
+          </div>
         </div>
       </div>
     </div>
