@@ -12,6 +12,13 @@
 
 html,
 body {
+  scroll-behavior: smooth;
   font-family: var(--font-sans);
   overflow-x: hidden;
+}
+
+/* Accent tabs */
+.tabs-accent .tab:is(input:checked) {
+  background-color: var(--color-accent);
+  color: var(--color-accent-content);
 }
