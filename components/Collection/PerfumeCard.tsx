@@ -1,12 +1,12 @@
 import { Plus, Check } from "lucide-react";
+import type { Perfume } from "@/types";
 
-const PerfumeCard = ({
-  perfume,
-  inCollection = false,
-}: {
-  perfume: { id: string; name: string; brand: string };
+type Props = {
+  perfume: Perfume;
   inCollection?: boolean;
-}) => (
+};
+
+const PerfumeCard = ({ perfume, inCollection = false }: Props) => (
   <div className="card card-compact bg-base-200/50 border border-base-content/5 hover:border-accent/30 transition-all group">
     {/* Image with overlay */}
     <figure className="relative aspect-square bg-base-300/50 rounded-t-xl overflow-hidden">

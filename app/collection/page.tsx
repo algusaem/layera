@@ -1,16 +1,8 @@
-import PerfumeCard from "@/components/Collection/PerfumeCard";
+import PerfumeGrid from "@/components/Collection/PerfumeGrid";
 import SectionContainer from "@/components/Main/SectionContainer";
 import Navbar from "@/components/Navbar";
 import { Search, Plus } from "lucide-react";
-
-const mockPerfumes = [
-  { id: "1", name: "Bleu de Chanel", brand: "Chanel" },
-  { id: "2", name: "Allure Homme Sport", brand: "Chanel" },
-  { id: "3", name: "Dior Homme", brand: "Dior" },
-  { id: "4", name: "Sauvage", brand: "Dior" },
-  { id: "5", name: "Aventus", brand: "Creed" },
-  { id: "6", name: "Green Irish Tweed", brand: "Creed" },
-];
+import { getAllPerfumesPaginated } from "../actions/getAllPerfumesPaginated";
 
 const Header = () => (
   <header className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
@@ -21,7 +13,7 @@ const Header = () => (
       <h1 className="text-4xl md:text-5xl font-serif italic">Collection</h1>
     </div>
 
-    <button className="btn btn-outline">
+    <button className="btn btn-outline btn-secondary">
       <Plus size={20} />
       Add Perfume
     </button>
@@ -53,15 +45,19 @@ const SearchBar = () => (
   </label>
 );
 
-const Grid = () => (
-  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-    {mockPerfumes.map((perfume) => (
-      <PerfumeCard key={perfume.id} perfume={perfume} />
-    ))}
-  </div>
-);
+type Props = {
+  searchParams: Promise<{ page?: string }>;
+};
 
-export default function Collection() {
+export default async function Collection({ searchParams }: Props) {
+  const { page: pageParam } = await searchParams;
+  const page = Math.max(1, parseInt(pageParam || "1", 10));
+
+  const { perfumes, pagination } = await getAllPerfumesPaginated({
+    page,
+    limit: 20,
+  });
+
   return (
     <div className="min-h-screen">
       <Navbar />
@@ -70,7 +66,7 @@ export default function Collection() {
           <Header />
           <Tabs />
           <SearchBar />
-          <Grid />
+          <PerfumeGrid perfumes={perfumes} pagination={pagination} />
         </SectionContainer>
       </main>
     </div>
