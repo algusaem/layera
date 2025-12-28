@@ -3,10 +3,12 @@ import { ChevronLeft, ChevronRight, Search } from "lucide-react";
 import PerfumeCard from "./PerfumeCard";
 import type { Perfume, PaginationData } from "@/types";
 import NoPerfume from "../NoPerfume";
+import clsx from "clsx";
 
 type Props = {
   perfumes: Perfume[];
   pagination: PaginationData;
+  basePath?: string;
 };
 
 const SearchBar = () => (
@@ -16,23 +18,33 @@ const SearchBar = () => (
   </label>
 );
 
-const Pagination = ({ page, totalPages }: PaginationData) => (
+const Pagination = ({
+  page,
+  totalPages,
+  basePath,
+}: PaginationData & { basePath: string }) => (
   <div className="flex justify-end">
     <div className="join">
       <Link
-        href={`/collection?page=${page - 1}`}
-        className={`join-item btn btn-sm ${page <= 1 ? "btn-disabled" : ""}`}
+        href={`${basePath}?page=${page - 1}`}
+        className={clsx(
+          "join-item btn btn-sm",
+          page <= 1 ? "btn-disabled" : ""
+        )}
       >
         <ChevronLeft size={16} />
       </Link>
+
       <span className="join-item btn btn-sm btn-disabled">
         {page} / {totalPages || 1}
       </span>
+
       <Link
-        href={`/collection?page=${page + 1}`}
-        className={`join-item btn btn-sm ${
+        href={`${basePath}?page=${page + 1}`}
+        className={clsx(
+          "join-item btn btn-sm",
           page >= totalPages ? "btn-disabled" : ""
-        }`}
+        )}
       >
         <ChevronRight size={16} />
       </Link>
@@ -40,7 +52,11 @@ const Pagination = ({ page, totalPages }: PaginationData) => (
   </div>
 );
 
-const PerfumeGrid = ({ perfumes, pagination }: Props) => {
+const PerfumeGrid = ({
+  perfumes,
+  pagination,
+  basePath = "/collection/browse",
+}: Props) => {
   return (
     <>
       <SearchBar />
@@ -54,7 +70,11 @@ const PerfumeGrid = ({ perfumes, pagination }: Props) => {
         ) : (
           <NoPerfume />
         )}
-        <Pagination page={pagination.page} totalPages={pagination.totalPages} />
+        <Pagination
+          page={pagination.page}
+          totalPages={pagination.totalPages}
+          basePath={basePath}
+        />
       </div>
     </>
   );
