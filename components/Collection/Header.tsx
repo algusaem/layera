@@ -1,16 +1,23 @@
 import clsx from "clsx";
 import Link from "next/link";
+import { Library, Search, Plus, LucideIcon } from "lucide-react";
 
 type NavItem = {
   href: string;
   label: string;
   key: string;
+  icon: LucideIcon;
 };
 
 const navItems: NavItem[] = [
-  { href: "/collection", label: "My Collection", key: "collection" },
-  { href: "/collection/browse", label: "Browse Database", key: "browse" },
-  { href: "/collection/add", label: "Add Perfume", key: "add" },
+  {
+    href: "/collection",
+    label: "My Collection",
+    key: "collection",
+    icon: Library,
+  },
+  { href: "/collection/browse", label: "Browse", key: "browse", icon: Search },
+  { href: "/collection/add", label: "Add", key: "add", icon: Plus },
 ];
 
 const Header = ({ selected }: { selected: string }) => (
@@ -21,19 +28,20 @@ const Header = ({ selected }: { selected: string }) => (
       </p>
       <h1 className="text-4xl md:text-5xl font-serif italic">Collection</h1>
     </div>
-    <nav className="flex gap-1 bg-base-200/50 p-1 rounded-lg">
+    <nav className="flex gap-1 bg-base-200/50 p-1 rounded-lg w-full sm:w-fit">
       {navItems.map((item) => (
         <Link
           key={item.key}
           href={item.href}
           className={clsx(
-            "px-4 py-2 rounded-md text-sm transition-colors",
+            "p-2 sm:px-4 sm:py-2 rounded-md text-sm transition-colors flex items-center gap-2",
             selected === item.key
               ? "bg-accent text-accent-content font-medium"
               : "text-secondary/70 hover:text-secondary hover:bg-base-300/50"
           )}
         >
-          {item.label}
+          <item.icon size={18} />
+          <span className="hidden sm:inline">{item.label}</span>
         </Link>
       ))}
     </nav>

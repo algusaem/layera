@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Instrument_Serif, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Footer from "@/components/Footer";
+import { Toaster } from "sonner";
 
 const inter = Inter({
   variable: "--font-sans",
@@ -35,6 +36,7 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${instrumentSerif.variable} ${geistMono.variable} antialiased`}
       >
+        <Toaster />
         {children}
         <Footer />
       </body>
