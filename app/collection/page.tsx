@@ -3,6 +3,7 @@ import SectionContainer from "@/components/Main/SectionContainer";
 import Navbar from "@/components/Navbar";
 import { Search, Plus } from "lucide-react";
 import { getAllPerfumesPaginated } from "../actions/getAllPerfumesPaginated";
+import CollectionSelector from "@/components/Collection/CollectionSelector";
 
 const Header = () => (
   <header className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
@@ -18,31 +19,6 @@ const Header = () => (
       Add Perfume
     </button>
   </header>
-);
-
-const Tabs = () => (
-  <div className="tabs tabs-box tabs-accent w-fit">
-    <input
-      type="radio"
-      name="CollectionTabs"
-      className="tab"
-      aria-label="Browse Database"
-      defaultChecked
-    />
-    <input
-      type="radio"
-      name="CollectionTabs"
-      className="tab"
-      aria-label="My Collection (0)"
-    />
-  </div>
-);
-
-const SearchBar = () => (
-  <label className="input w-full border-base-content/10 bg-base-200">
-    <Search size={20} className="text-secondary/40" />
-    <input type="search" required placeholder="Search" />
-  </label>
 );
 
 type Props = {
@@ -64,9 +40,7 @@ export default async function Collection({ searchParams }: Props) {
       <main className="w-full flex items-center flex-col">
         <SectionContainer className="max-w-6xl space-y-8">
           <Header />
-          <Tabs />
-          <SearchBar />
-          <PerfumeGrid perfumes={perfumes} pagination={pagination} />
+          <CollectionSelector perfumes={perfumes} pagination={pagination} />
         </SectionContainer>
       </main>
     </div>

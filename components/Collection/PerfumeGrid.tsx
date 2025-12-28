@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Search } from "lucide-react";
 import PerfumeCard from "./PerfumeCard";
 import type { Perfume, PaginationData } from "@/types";
 import NoPerfume from "../NoPerfume";
@@ -8,6 +8,13 @@ type Props = {
   perfumes: Perfume[];
   pagination: PaginationData;
 };
+
+const SearchBar = () => (
+  <label className="input w-full border-base-content/10 bg-base-200">
+    <Search size={20} className="text-secondary/40" />
+    <input type="search" required placeholder="Search" />
+  </label>
+);
 
 const Pagination = ({ page, totalPages }: PaginationData) => (
   <div className="flex justify-end">
@@ -35,19 +42,21 @@ const Pagination = ({ page, totalPages }: PaginationData) => (
 
 const PerfumeGrid = ({ perfumes, pagination }: Props) => {
   return (
-    <div className="space-y-8">
-      {perfumes.length > 0 ? (
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-          {perfumes.map((perfume) => (
-            <PerfumeCard key={perfume.id} perfume={perfume} />
-          ))}
-        </div>
-      ) : (
-        <NoPerfume />
-      )}
-
-      <Pagination page={pagination.page} totalPages={pagination.totalPages} />
-    </div>
+    <>
+      <SearchBar />
+      <div className="space-y-8">
+        {perfumes.length > 0 ? (
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+            {perfumes.map((perfume) => (
+              <PerfumeCard key={perfume.id} perfume={perfume} />
+            ))}
+          </div>
+        ) : (
+          <NoPerfume />
+        )}
+        <Pagination page={pagination.page} totalPages={pagination.totalPages} />
+      </div>
+    </>
   );
 };
 
