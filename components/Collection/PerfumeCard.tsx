@@ -37,9 +37,9 @@ const PerfumeCard = ({ perfume, inCollection = false }: Props) => (
       )}
     </figure>
 
-    <div className="card-body gap-1">
+    <div className="card-body gap-1 grow-0">
       <p className="text-xs text-secondary/50">{perfume.brand}</p>
-      <h3 className="font-medium text-sm leading-tight">{perfume.name}</h3>
+      <h3 className="font-medium text-sm leading-tight line-clamp-2">{perfume.name}</h3>
     </div>
   </div>
 );

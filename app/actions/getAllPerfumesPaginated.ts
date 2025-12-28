@@ -1,6 +1,7 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
+import type { Perfume } from "@/types";
 
 type GetPerfumesParams = {
   page?: number;
@@ -15,33 +16,41 @@ export async function getAllPerfumesPaginated({
 }: GetPerfumesParams = {}) {
   const skip = (page - 1) * limit;
 
-  const where = search
-    ? {
-        OR: [
-          { name: { contains: search, mode: "insensitive" as const } },
-          { brand: { contains: search, mode: "insensitive" as const } },
-        ],
-      }
-    : undefined;
+  const where = {
+    imageUrl: { not: null },
+    ...(search
+      ? {
+          OR: [
+            { name: { contains: search, mode: "insensitive" as const } },
+            { brand: { contains: search, mode: "insensitive" as const } },
+          ],
+        }
+      : {}),
+  };
 
-  const [perfumes, total] = await Promise.all([
+  const [perfumesRaw, total] = await Promise.all([
     prisma.perfume.findMany({
       where,
       skip,
       take: limit,
       orderBy: [{ brand: "asc" }, { name: "asc" }],
+      select: {
+        id: true,
+        name: true,
+        brand: true,
+        imageUrl: true,
+      },
     }),
     prisma.perfume.count({ where }),
   ]);
+
+  const perfumes = perfumesRaw as Perfume[];
 
   return {
     perfumes,
     pagination: {
       page,
-      limit,
-      total,
       totalPages: Math.ceil(total / limit),
-      hasMore: skip + perfumes.length < total,
     },
   };
 }
