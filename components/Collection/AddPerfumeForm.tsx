@@ -4,19 +4,20 @@ import { addPerfume } from "@/app/actions/addPerfume";
 import { useForm, UseFormRegister, FieldError } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { useState } from "react";
+import ImageUpload from "../ImageUpload";
 
-type FormData = {
+type PerfumeFormData = {
   brand: string;
   name: string;
-  imageUrl?: string;
 };
 
 type FormInputProps = {
   label: string;
   placeholder: string;
-  name: keyof FormData;
+  name: keyof PerfumeFormData;
   type?: string;
-  register: UseFormRegister<FormData>;
+  register: UseFormRegister<PerfumeFormData>;
   error?: FieldError;
   required?: boolean;
 };
@@ -44,15 +45,22 @@ const FormInput = ({
 
 const AddPerfumeForm = () => {
   const router = useRouter();
+  const [imageFile, setImageFile] = useState<File | null>(null);
 
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<FormData>();
+  } = useForm<PerfumeFormData>();
 
-  const onSubmit = async (data: FormData) => {
-    const result = await addPerfume(data);
+  const onSubmit = async (data: PerfumeFormData) => {
+    let imageFormData: FormData | undefined;
+    if (imageFile) {
+      imageFormData = new FormData();
+      imageFormData.append("image", imageFile);
+    }
+
+    const result = await addPerfume(data, imageFormData);
 
     if (result.error) {
       toast.error(result.error);
@@ -81,14 +89,7 @@ const AddPerfumeForm = () => {
         error={errors.name}
       />
 
-      <FormInput
-        label="Image URL"
-        placeholder="https://example.com/image.jpg"
-        name="imageUrl"
-        type="url"
-        register={register}
-        required={false}
-      />
+      <ImageUpload onFileChange={setImageFile} />
 
       <button
         type="submit"
