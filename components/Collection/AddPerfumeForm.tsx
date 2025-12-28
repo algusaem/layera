@@ -54,11 +54,13 @@ const AddPerfumeForm = () => {
   } = useForm<PerfumeFormData>();
 
   const onSubmit = async (data: PerfumeFormData) => {
-    let imageFormData: FormData | undefined;
-    if (imageFile) {
-      imageFormData = new FormData();
-      imageFormData.append("image", imageFile);
+    if (!imageFile) {
+      toast.error("Please upload an image");
+      return;
     }
+
+    const imageFormData = new FormData();
+    imageFormData.append("image", imageFile);
 
     const result = await addPerfume(data, imageFormData);
 

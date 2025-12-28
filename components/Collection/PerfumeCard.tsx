@@ -1,4 +1,5 @@
 import { Plus, Check } from "lucide-react";
+import Image from "next/image";
 import type { Perfume } from "@/types";
 
 type Props = {
@@ -9,8 +10,13 @@ type Props = {
 const PerfumeCard = ({ perfume, inCollection = false }: Props) => (
   <div className="card card-compact bg-base-200/50 border border-base-content/5 hover:border-accent/30 transition-all group">
     {/* Image with overlay */}
-    <figure className="relative aspect-square bg-base-300/50 rounded-t-xl overflow-hidden">
-      <span className="text-secondary/20 text-xs">No image</span>
+    <figure className="relative aspect-3/4 bg-base-300/50 overflow-hidden">
+      <Image
+        src={perfume.imageUrl}
+        alt={perfume.name}
+        fill
+        className="object-cover"
+      />
 
       {/* Hover overlay */}
       <div className="absolute inset-0 bg-base-100/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">

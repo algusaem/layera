@@ -16,3 +16,4 @@ Layera is an AI-powered web app for discovering and creating perfume layering co
 - Prisma
 - PostgreSQL
 - Neon
+- Cloudinary

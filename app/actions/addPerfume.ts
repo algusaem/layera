@@ -9,11 +9,16 @@ type AddPerfumeData = {
   brand: string;
 };
 
-export async function addPerfume(data: AddPerfumeData, formData?: FormData) {
+export async function addPerfume(data: AddPerfumeData, formData: FormData) {
   const { name, brand } = data;
 
   if (!name || !brand) {
     return { error: "Name and brand are required" };
+  }
+
+  const file = formData.get("image") as File;
+  if (!file || file.size === 0) {
+    return { error: "Image is required" };
   }
 
   const existingPerfume = await prisma.perfume.findFirst({
@@ -26,21 +31,15 @@ export async function addPerfume(data: AddPerfumeData, formData?: FormData) {
     };
   }
 
-  // Upload image if provided
-  let imageUrl: string | null = null;
-  if (formData) {
-    const file = formData.get("image") as File;
-    if (file && file.size > 0) {
-      const imageFormData = new FormData();
-      imageFormData.append("file", file);
-      const uploadResult = await uploadImage(imageFormData);
+  // Upload image
+  const imageFormData = new FormData();
+  imageFormData.append("file", file);
+  const uploadResult = await uploadImage(imageFormData);
 
-      if (uploadResult.error) {
-        return { error: uploadResult.error };
-      }
-      imageUrl = uploadResult.url!;
-    }
+  if (uploadResult.error) {
+    return { error: uploadResult.error };
   }
+  const imageUrl = uploadResult.url!;
 
   try {
     await prisma.perfume.create({
