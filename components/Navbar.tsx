@@ -1,5 +1,7 @@
 import { Menu } from "lucide-react";
 import Link from "next/link";
+import { auth } from "@/lib/auth";
+import UserAvatar from "./UserAvatar";
 
 const NavLink = ({ children, href }: { children: string; href: string }) => (
   <Link
@@ -11,11 +13,14 @@ const NavLink = ({ children, href }: { children: string; href: string }) => (
 );
 
 const links = [
-  { href: "ask", label: "Find your scent" },
-  { href: "collection", label: "Collection" },
+  { href: "/ask", label: "Find your scent" },
+  { href: "/collection", label: "Collection" },
 ];
 
-const Navbar = () => {
+const Navbar = async () => {
+  const session = await auth();
+  const user = session?.user;
+
   return (
     <div className="drawer">
       <input id="nav-drawer" type="checkbox" className="drawer-toggle" />
@@ -46,12 +51,19 @@ const Navbar = () => {
             </div>
 
             {/* Desktop menu */}
-            <div className="hidden lg:flex gap-6">
+            <div className="hidden lg:flex gap-6 items-center">
               {links.map((link) => (
                 <NavLink key={link.href} href={link.href}>
                   {link.label}
                 </NavLink>
               ))}
+
+              {/* Auth section */}
+              {user ? (
+                <UserAvatar name={user.name} email={user.email} />
+              ) : (
+                <NavLink href="/collection/login">Log In</NavLink>
+              )}
             </div>
           </div>
         </nav>
@@ -75,6 +87,15 @@ const Navbar = () => {
                 {link.label}
               </NavLink>
             ))}
+
+            {/* Auth section for mobile */}
+            <div className="mt-4 pt-4 border-t border-base-content/10">
+              {user ? (
+                <UserAvatar name={user.name} email={user.email} />
+              ) : (
+                <NavLink href="/collection/login">Log In</NavLink>
+              )}
+            </div>
           </div>
         </div>
       </div>
