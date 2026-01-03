@@ -1,6 +1,7 @@
 import Image from "next/image";
 import heroImg from "@/public/hero_image.jpg";
 import SectionContainer from "./SectionContainer";
+import Link from "next/link";
 
 const IntroSection = () => {
   return (
@@ -28,12 +29,12 @@ const IntroSection = () => {
 
           {/* Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 pt-4">
-            <button className="btn btn-accent btn-lg px-8">
+            <Link href="/ask" className="btn btn-accent btn-lg px-8">
               Find your scent
-            </button>
-            <button className="btn btn-outline btn-lg px-8">
+            </Link>
+            <Link href="/collection" className="btn btn-outline btn-lg px-8">
               Build your collection
-            </button>
+            </Link>
           </div>
 
           {/* Subtle accent */}
