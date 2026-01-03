@@ -10,7 +10,8 @@ type AddPerfumeData = {
 };
 
 export async function addPerfume(data: AddPerfumeData, formData: FormData) {
-  const { name, brand } = data;
+  const name = data.name.trim();
+  const brand = data.brand.trim();
 
   if (!name || !brand) {
     return { error: "Name and brand are required" };
@@ -22,7 +23,7 @@ export async function addPerfume(data: AddPerfumeData, formData: FormData) {
   }
 
   const existingPerfume = await prisma.perfume.findFirst({
-    where: { name: { equals: name.trim(), mode: "insensitive" } },
+    where: { name: { equals: name, mode: "insensitive" } },
   });
 
   if (existingPerfume) {
@@ -44,8 +45,8 @@ export async function addPerfume(data: AddPerfumeData, formData: FormData) {
   try {
     await prisma.perfume.create({
       data: {
-        name: name.trim(),
-        brand: brand.trim(),
+        name,
+        brand,
         imageUrl,
       },
     });
