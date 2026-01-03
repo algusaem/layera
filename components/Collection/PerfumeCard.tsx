@@ -1,6 +1,6 @@
-import { Plus, Check } from "lucide-react";
 import Image from "next/image";
 import type { Perfume } from "@/types";
+import AddToCollectionButton from "./AddToCollectionButton";
 
 type Props = {
   perfume: Perfume;
@@ -20,15 +20,7 @@ const PerfumeCard = ({ perfume, inCollection = false }: Props) => (
 
       {/* Hover overlay */}
       <div className="absolute inset-0 bg-base-100/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-        {inCollection ? (
-          <button className="btn btn-circle btn-accent">
-            <Check size={20} />
-          </button>
-        ) : (
-          <button className="btn btn-circle btn-accent">
-            <Plus size={20} />
-          </button>
-        )}
+        <AddToCollectionButton perfumeId={perfume.id} inCollection={inCollection} />
       </div>
 
       {/* Collection indicator */}

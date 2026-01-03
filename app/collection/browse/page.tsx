@@ -1,4 +1,5 @@
 import { getAllPerfumesPaginated } from "@/app/actions/getAllPerfumesPaginated";
+import { getUserCollectionIds } from "@/app/actions/getUserCollectionIds";
 import Header from "@/components/Collection/Header";
 import PerfumeGrid from "@/components/Collection/PerfumeGrid";
 import SectionContainer from "@/components/Main/SectionContainer";
@@ -12,10 +13,8 @@ export default async function Browse({ searchParams }: Props) {
   const { page: pageParam } = await searchParams;
   const page = Math.max(1, parseInt(pageParam || "1", 10));
 
-  const { perfumes, pagination } = await getAllPerfumesPaginated({
-    page,
-    limit: 20,
-  });
+  const { perfumes, pagination } = await getAllPerfumesPaginated({ page, limit: 20 });
+  const userCollectionIds = await getUserCollectionIds();
 
   return (
     <div className="min-h-screen">
@@ -23,7 +22,11 @@ export default async function Browse({ searchParams }: Props) {
       <main className="w-full flex items-center flex-col">
         <SectionContainer className="max-w-6xl space-y-8">
           <Header selected="browse" />
-          <PerfumeGrid perfumes={perfumes} pagination={pagination} />
+          <PerfumeGrid
+            perfumes={perfumes}
+            pagination={pagination}
+            userCollectionIds={userCollectionIds}
+          />
         </SectionContainer>
       </main>
     </div>

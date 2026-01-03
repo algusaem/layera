@@ -9,6 +9,7 @@ type Props = {
   perfumes: Perfume[];
   pagination: PaginationData;
   basePath?: string;
+  userCollectionIds?: string[];
 };
 
 const SearchBar = () => (
@@ -56,6 +57,7 @@ const PerfumeGrid = ({
   perfumes,
   pagination,
   basePath = "/collection/browse",
+  userCollectionIds = [],
 }: Props) => {
   return (
     <>
@@ -64,7 +66,11 @@ const PerfumeGrid = ({
         {perfumes.length > 0 ? (
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
             {perfumes.map((perfume) => (
-              <PerfumeCard key={perfume.id} perfume={perfume} />
+              <PerfumeCard
+                key={perfume.id}
+                perfume={perfume}
+                inCollection={userCollectionIds.includes(perfume.id)}
+              />
             ))}
           </div>
         ) : (
