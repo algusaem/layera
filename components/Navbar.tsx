@@ -27,8 +27,8 @@ const Navbar = async () => {
 
       <div className="drawer-content flex justify-center w-full">
         {/* Navbar */}
-        <nav className="navbar border-b border-base-content/20 max-w-6xl">
-          <div className="container mx-auto px-4 flex items-center justify-center">
+        <nav className="navbar border-b border-base-content/20 max-w-6xl w-full px-4">
+          <div className="flex items-center justify-center w-full">
             {/* Mobile menu button */}
             <div className="flex-none lg:hidden">
               <label
