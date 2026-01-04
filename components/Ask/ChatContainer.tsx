@@ -1,9 +1,11 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useTransition } from "react";
 import ChatMessage from "./ChatMessage";
 import ChatInput from "./ChatInput";
 import ChatLoading from "./ChatLoading";
+import ChatSuggestions from "./ChatSuggestions";
+import { useScrollToBottom } from "./useScrollToBottom";
 import { Sparkles } from "lucide-react";
 import { sendMessage } from "@/app/actions/chat";
 import { toast } from "sonner";
@@ -16,20 +18,10 @@ type Message = {
 
 const ChatContainer = () => {
   const [messages, setMessages] = useState<Message[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [isPending, startTransition] = useTransition();
+  const scrollContainerRef = useScrollToBottom([messages, isPending]);
 
-  const scrollToBottom = () => {
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollTop = scrollContainerRef.current.scrollHeight;
-    }
-  };
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages, isLoading]);
-
-  const handleSend = async (content: string) => {
+  const handleSend = (content: string) => {
     const userMessage: Message = {
       id: Date.now().toString(),
       role: "user",
@@ -37,24 +29,23 @@ const ChatContainer = () => {
     };
 
     setMessages((prev) => [...prev, userMessage]);
-    setIsLoading(true);
 
-    const result = await sendMessage(messages, content);
+    startTransition(async () => {
+      const result = await sendMessage(messages, content);
 
-    if (result.error) {
-      toast.error(result.error);
-      setIsLoading(false);
-      return;
-    }
+      if (result.error) {
+        toast.error(result.error);
+        return;
+      }
 
-    const assistantMessage: Message = {
-      id: (Date.now() + 1).toString(),
-      role: "assistant",
-      content: result.response!,
-    };
+      const assistantMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        role: "assistant",
+        content: result.response!,
+      };
 
-    setMessages((prev) => [...prev, assistantMessage]);
-    setIsLoading(false);
+      setMessages((prev) => [...prev, assistantMessage]);
+    });
   };
 
   return (
@@ -73,6 +64,7 @@ const ChatContainer = () => {
                 Ask me anything about fragrances
               </p>
             </div>
+            <ChatSuggestions onSuggestionClick={handleSend} />
           </div>
         ) : (
           <div className="py-8 space-y-6">
@@ -83,13 +75,13 @@ const ChatContainer = () => {
                 content={message.content}
               />
             ))}
-            {isLoading && <ChatLoading />}
+            {isPending && <ChatLoading />}
           </div>
         )}
       </div>
 
       <div className="sticky bottom-0 bg-base-100 border-t border-base-content/10 p-4">
-        <ChatInput onSend={handleSend} disabled={isLoading} />
+        <ChatInput onSend={handleSend} disabled={isPending} />
       </div>
     </main>
   );

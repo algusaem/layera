@@ -25,10 +25,10 @@ const Navbar = async () => {
     <div className="drawer">
       <input id="nav-drawer" type="checkbox" className="drawer-toggle" />
 
-      <div className="drawer-content">
+      <div className="drawer-content flex justify-center w-full">
         {/* Navbar */}
-        <nav className="navbar border-b border-base-content/20 flex justify-center">
-          <div className="container mx-auto max-w-6xl px-4 flex items-center justify-center">
+        <nav className="navbar border-b border-base-content/20 max-w-6xl">
+          <div className="container mx-auto px-4 flex items-center justify-center">
             {/* Mobile menu button */}
             <div className="flex-none lg:hidden">
               <label
