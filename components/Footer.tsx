@@ -1,5 +1,6 @@
 import { Code } from "lucide-react";
 import Link from "next/link";
+import PerfumeBottleIcon from "./PerfumeBottleIcon";
 
 const Footer = () => {
   return (
@@ -10,9 +11,14 @@ const Footer = () => {
           <div className="flex flex-col gap-4">
             <Link
               href="/"
-              className="text-xl hover:text-accent transition-colors"
+              className="hover:opacity-80 transition-opacity flex items-center gap-1"
             >
-              Layera
+              <div className="text-accent">
+                <PerfumeBottleIcon />
+              </div>
+              <span className="text-xl font-semibold tracking-wide font-display">
+                Layera
+              </span>
             </Link>
             <p className="text-sm text-secondary/50 max-w-xs">
               Discover the art of fragrance layering. Find combinations that
