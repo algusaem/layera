@@ -11,7 +11,13 @@ export const releases: Release[] = [
       },
       {
         type: "improvement",
-        description: "Component-based architecture for changelog with clean separation of concerns",
+        description:
+          "Component-based architecture for changelog with clean separation of concerns",
+      },
+      {
+        type: "improvement",
+        description:
+          "Updated favicon to orange outline on transparent background for better tab rendering",
       },
     ],
   },
@@ -21,7 +27,8 @@ export const releases: Release[] = [
     changes: [
       {
         type: "feature",
-        description: "AI-powered fragrance chat with personalized recommendations",
+        description:
+          "AI-powered fragrance chat with personalized recommendations",
       },
       {
         type: "feature",
@@ -85,7 +92,8 @@ export const releases: Release[] = [
     changes: [
       {
         type: "feature",
-        description: "Complete authentication system with login and registration",
+        description:
+          "Complete authentication system with login and registration",
       },
     ],
   },

@@ -25,7 +25,7 @@ const ChatInput = ({ onSend, disabled = false }: Props) => {
         type="text"
         value={message}
         onChange={(e) => setMessage(e.target.value)}
-        placeholder="Ask me anything about fragrances..."
+        placeholder="Ask me anything about fragrance layering..."
         disabled={disabled}
         className="input input-bordered flex-1"
       />

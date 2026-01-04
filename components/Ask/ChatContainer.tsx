@@ -61,7 +61,7 @@ const ChatContainer = () => {
                 Find Your Perfect Scent
               </h2>
               <p className="text-base-content/60">
-                Ask me anything about fragrances
+                For which ocasion are you looking to layer fragrances?
               </p>
             </div>
             <ChatSuggestions onSuggestionClick={handleSend} />
