@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { login } from "@/app/actions/auth";
 import Link from "next/link";
+import { FlaskConical, LogIn } from "lucide-react";
 
 type LoginFormData = {
   email: string;
@@ -17,6 +18,7 @@ const LoginForm = () => {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm<LoginFormData>();
 
@@ -30,6 +32,14 @@ const LoginForm = () => {
 
     toast.success("Welcome back!");
     router.push("/collection");
+  };
+
+  const handleDemoLogin = async () => {
+    setValue("email", "test01@layera.com");
+    setValue("password", "test123");
+
+    // Submit the form with demo credentials
+    await handleSubmit(onSubmit)();
   };
 
   return (
@@ -68,8 +78,22 @@ const LoginForm = () => {
         {isSubmitting ? (
           <span className="loading loading-spinner loading-sm" />
         ) : (
-          "Sign In"
+          <>
+            <LogIn size={18} />
+            Sign In
+          </>
         )}
+      </button>
+
+      <div className="divider text-secondary/40">OR</div>
+
+      <button
+        type="button"
+        onClick={handleDemoLogin}
+        className="btn btn-outline w-full"
+      >
+        <FlaskConical size={18} />
+        Demo Login
       </button>
 
       <p className="text-center text-sm text-secondary/60">
