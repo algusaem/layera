@@ -1,6 +1,8 @@
 "use server";
 
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import { auth } from "@/lib/auth";
+import { prisma } from "@/lib/prisma";
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
 
@@ -20,12 +22,36 @@ export async function sendMessage(messages: Message[], newMessage: string) {
   }
 
   try {
+    const session = await auth();
+    let collectionInfo = "";
+
+    if (session?.user?.id) {
+      const userPerfumes = await prisma.userPerfume.findMany({
+        where: { userId: session.user.id },
+        include: {
+          perfume: {
+            select: {
+              name: true,
+              brand: true,
+            },
+          },
+        },
+      });
+
+      if (userPerfumes.length > 0) {
+        const perfumeList = userPerfumes
+          .map((up) => `${up.perfume.brand} - ${up.perfume.name}`)
+          .join(", ");
+        collectionInfo = `\n\nThe user's current perfume collection includes: ${perfumeList}.`;
+      }
+    }
+
     const model = genAI.getGenerativeModel({
       model: "gemini-3-pro-preview",
       systemInstruction: `You are a helpful fragrance expert assistant for Layera, a fragrance layering website.
 Your role is to help users discover and understand perfumes, provide recommendations for layering fragrances,
 and answer questions about scents, notes, brands, and fragrance combinations.
-Be friendly, knowledgeable, and concise in your responses. Refuse to answer questions outside the domain of fragrances.`
+Be friendly, knowledgeable, and concise in your responses. Refuse to answer questions outside the domain of fragrances.${collectionInfo}`
     });
 
     // Build conversation history for context
