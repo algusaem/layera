@@ -1,33 +1,37 @@
-import { Menu } from "lucide-react";
+import { Menu, Home, Sparkles, Library, LogIn } from "lucide-react";
 import Link from "next/link";
 import { auth } from "@/lib/auth";
 import UserAvatar from "./UserAvatar";
+import type { LucideIcon } from "lucide-react";
 
 const NavLink = ({
   children,
   href,
   mobile = false,
+  icon: Icon,
 }: {
   children: string;
   href: string;
   mobile?: boolean;
+  icon?: LucideIcon;
 }) => (
   <Link
     href={href}
     className={
       mobile
         ? "btn btn-ghost justify-start text-lg"
-        : "text-lg lg:text-base hover:text-accent transition-colors"
+        : "text-lg lg:text-base hover:text-accent transition-colors flex items-center gap-2"
     }
   >
+    {Icon && <Icon size={mobile ? 20 : 18} />}
     {children}
   </Link>
 );
 
 const links = [
-  { href: "/", label: "Home" },
-  { href: "/ask", label: "Find your scent" },
-  { href: "/collection", label: "Collection" },
+  { href: "/", label: "Home", icon: Home },
+  { href: "/ask", label: "Find your scent", icon: Sparkles },
+  { href: "/collection", label: "Collection", icon: Library },
 ];
 
 const Navbar = async () => {
@@ -66,7 +70,7 @@ const Navbar = async () => {
             {/* Desktop menu */}
             <div className="hidden lg:flex gap-6 items-center">
               {links.map((link) => (
-                <NavLink key={link.href} href={link.href}>
+                <NavLink key={link.href} href={link.href} icon={link.icon}>
                   {link.label}
                 </NavLink>
               ))}
@@ -75,7 +79,9 @@ const Navbar = async () => {
               {user ? (
                 <UserAvatar name={user.name} email={user.email} />
               ) : (
-                <NavLink href="/collection/login">Log In</NavLink>
+                <NavLink href="/collection/login" icon={LogIn}>
+                  Log In
+                </NavLink>
               )}
             </div>
           </div>
@@ -93,7 +99,7 @@ const Navbar = async () => {
           {/* Drawer menu */}
           <div className="flex flex-col gap-2">
             {links.map((link) => (
-              <NavLink key={link.href} href={link.href} mobile>
+              <NavLink key={link.href} href={link.href} mobile icon={link.icon}>
                 {link.label}
               </NavLink>
             ))}
@@ -103,7 +109,7 @@ const Navbar = async () => {
               {user ? (
                 <UserAvatar name={user.name} email={user.email} />
               ) : (
-                <NavLink href="/collection/login" mobile>
+                <NavLink href="/collection/login" mobile icon={LogIn}>
                   Log In
                 </NavLink>
               )}

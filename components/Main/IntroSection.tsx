@@ -1,3 +1,4 @@
+import { Sparkles, Library } from "lucide-react";
 import Image from "next/image";
 import heroImg from "@/public/hero_image.jpg";
 import SectionContainer from "./SectionContainer";
@@ -30,10 +31,11 @@ const IntroSection = () => {
           {/* Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 pt-4">
             <Link href="/ask" className="btn btn-accent btn-lg px-8">
+              <Sparkles size={20} />
               Find your scent
             </Link>
-            <Link href="/collection" className="btn btn-outline btn-lg px-8">
-              Build your collection
+            <Link href="/collection" className="btn btn-secondary btn-lg px-8">
+              <Library size={20} /> Build your collection
             </Link>
           </div>
 
