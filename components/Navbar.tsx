@@ -3,6 +3,19 @@ import Link from "next/link";
 import { auth } from "@/lib/auth";
 import UserAvatar from "./UserAvatar";
 import type { LucideIcon } from "lucide-react";
+import PerfumeBottleIcon from "./PerfumeBottleIcon";
+import clsx from "clsx";
+
+const Logo = () => (
+  <div className="flex items-center gap-1">
+    <div className="text-accent">
+      <PerfumeBottleIcon />
+    </div>
+    <span className="text-2xl font-semibold tracking-wide font-display">
+      Layera
+    </span>
+  </div>
+);
 
 const NavLink = ({
   children,
@@ -17,11 +30,12 @@ const NavLink = ({
 }) => (
   <Link
     href={href}
-    className={
+    className={clsx(
+      `hover:text-accent transition-colors`,
       mobile
         ? "btn btn-ghost justify-start text-lg"
-        : "text-lg lg:text-base hover:text-accent transition-colors flex items-center gap-2"
-    }
+        : "text-lg lg:text-base  flex items-center gap-2"
+    )}
   >
     {Icon && <Icon size={mobile ? 20 : 18} />}
     {children}
@@ -50,9 +64,9 @@ const Navbar = async () => {
             <div className="flex-1 w-full flex justify-start">
               <Link
                 href="/"
-                className="text-xl hover:text-accent transition-colors bg-transparent"
+                className="hover:opacity-80 transition-opacity bg-transparent"
               >
-                Layera
+                <Logo />
               </Link>
             </div>
 
@@ -96,6 +110,14 @@ const Navbar = async () => {
           className="drawer-overlay"
         />
         <div className="min-h-full w-72 bg-base-200 p-6">
+          {/* Drawer header */}
+          <Link
+            href="/"
+            className="mb-8 block hover:opacity-80 transition-opacity"
+          >
+            <Logo />
+          </Link>
+
           {/* Drawer menu */}
           <div className="flex flex-col gap-2">
             {links.map((link) => (
