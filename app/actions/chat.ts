@@ -28,7 +28,7 @@ export async function sendMessage(messages: Message[], newMessage: string) {
     if (session?.user?.id) {
       const userPerfumes = await prisma.userPerfume.findMany({
         where: { userId: session.user.id },
-        include: {
+        select: {
           perfume: {
             select: {
               name: true,
@@ -42,16 +42,16 @@ export async function sendMessage(messages: Message[], newMessage: string) {
         const perfumeList = userPerfumes
           .map((up) => `${up.perfume.brand} - ${up.perfume.name}`)
           .join(", ");
-        collectionInfo = `\n\nThe user's current perfume collection includes: ${perfumeList}.`;
+        collectionInfo = `\n\nUser's collection: ${perfumeList}`;
       }
     }
 
     const model = genAI.getGenerativeModel({
       model: "gemini-3-pro-preview",
-      systemInstruction: `You are a helpful fragrance expert assistant for Layera, a fragrance layering website.
-Your role is to help users discover and understand perfumes, provide recommendations for layering fragrances,
-and answer questions about scents, notes, brands, and fragrance combinations.
-Be friendly, knowledgeable, and concise in your responses. Refuse to answer questions outside the domain of fragrances.${collectionInfo}`
+      systemInstruction: `You are a helpful fragrance expert for Layera. Help users layer fragrances and answer scent questions.
+Be concise and direct - keep responses under 150 words unless asked for details.
+For layering advice, use this format: recommend specific perfumes, application areas, and spray counts (e.g., "2 sprays on wrists").
+Only discuss fragrances - politely decline other topics.${collectionInfo}`
     });
 
     // Build conversation history for context

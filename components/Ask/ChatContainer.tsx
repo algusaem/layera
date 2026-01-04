@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import ChatMessage from "./ChatMessage";
 import ChatInput from "./ChatInput";
+import ChatLoading from "./ChatLoading";
 import { Sparkles } from "lucide-react";
 import { sendMessage } from "@/app/actions/chat";
 import { toast } from "sonner";
@@ -16,6 +17,17 @@ type Message = {
 const ChatContainer = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  const scrollToBottom = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollTop = scrollContainerRef.current.scrollHeight;
+    }
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages, isLoading]);
 
   const handleSend = async (content: string) => {
     const userMessage: Message = {
@@ -47,7 +59,7 @@ const ChatContainer = () => {
 
   return (
     <main className="flex flex-col h-[calc(100vh-5rem)] max-w-3xl mx-auto w-full">
-      <div className="flex-1 overflow-y-auto px-4">
+      <div ref={scrollContainerRef} className="flex-1 overflow-y-auto px-4">
         {messages.length === 0 ? (
           <div className="flex flex-col items-center justify-center h-full text-center space-y-6">
             <div className="bg-accent/10 p-4 rounded-full">
@@ -71,6 +83,7 @@ const ChatContainer = () => {
                 content={message.content}
               />
             ))}
+            {isLoading && <ChatLoading />}
           </div>
         )}
       </div>

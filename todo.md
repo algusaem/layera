@@ -1,3 +1,5 @@
 - Login history
 - Limit AI prompts
 - Admin only features (a system so new fragrances get their addition pending until admin approves)
+- Import from Fragrantica
+- Select for brands (will need a new table "Brand" linked to "Perfume")
