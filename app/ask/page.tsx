@@ -1,11 +1,11 @@
 import Navbar from "@/components/Navbar";
+import ChatContainer from "@/components/Ask/ChatContainer";
 
 export default function Ask() {
   return (
-    <div className="min-h-screen min-w-screen">
+    <div className="min-h-screen">
       <Navbar />
-
-      <main className="w-full flex items-center flex-col">Ask</main>
+      <ChatContainer />
     </div>
   );
 }

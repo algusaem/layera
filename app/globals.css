@@ -17,6 +17,17 @@ body {
   overflow-x: hidden;
 }
 
+/* Custom text selection */
+::selection {
+  background-color: #1eb854;
+  color: #ffffff;
+}
+
+::-moz-selection {
+  background-color: #1eb854;
+  color: #ffffff;
+}
+
 /* Accent tabs */
 .tabs-accent .tab:is(input:checked) {
   background-color: var(--color-accent);

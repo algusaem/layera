@@ -1,0 +1,80 @@
+"use client";
+
+import { useState } from "react";
+import ChatMessage from "./ChatMessage";
+import ChatInput from "./ChatInput";
+import { Sparkles } from "lucide-react";
+
+type Message = {
+  id: string;
+  role: "user" | "assistant";
+  content: string;
+};
+
+const ChatContainer = () => {
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleSend = async (content: string) => {
+    const userMessage: Message = {
+      id: Date.now().toString(),
+      role: "user",
+      content,
+    };
+
+    setMessages((prev) => [...prev, userMessage]);
+    setIsLoading(true);
+
+    // TODO: Call AI API here
+    // For now, just simulate a response
+    setTimeout(() => {
+      const assistantMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        role: "assistant",
+        content: "This is a placeholder response. AI integration coming soon!",
+      };
+      setMessages((prev) => [...prev, assistantMessage]);
+      setIsLoading(false);
+    }, 1000);
+  };
+
+  return (
+    <main className="flex flex-col h-[calc(100vh-5rem)] max-w-3xl mx-auto w-full">
+      {/* Messages area */}
+      <div className="flex-1 overflow-y-auto px-4">
+        {messages.length === 0 ? (
+          <div className="flex flex-col items-center justify-center h-full text-center space-y-6">
+            <div className="bg-accent/10 p-4 rounded-full">
+              <Sparkles size={32} className="text-accent" />
+            </div>
+            <div>
+              <h2 className="text-2xl font-bold mb-2">
+                Find Your Perfect Scent
+              </h2>
+              <p className="text-secondary/60">
+                Ask me anything about fragrances
+              </p>
+            </div>
+          </div>
+        ) : (
+          <div className="py-8 space-y-6">
+            {messages.map((message) => (
+              <ChatMessage
+                key={message.id}
+                role={message.role}
+                content={message.content}
+              />
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Input at bottom */}
+      <div className="sticky bottom-0 bg-base-100 border-t border-base-content/10 p-4">
+        <ChatInput onSend={handleSend} disabled={isLoading} />
+      </div>
+    </main>
+  );
+};
+
+export default ChatContainer;
