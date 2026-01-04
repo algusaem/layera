@@ -1,4 +1,6 @@
+import clsx from "clsx";
 import { Bot, User } from "lucide-react";
+import ReactMarkdown from "react-markdown";
 
 type Props = {
   role: "user" | "assistant";
@@ -9,7 +11,7 @@ const ChatMessage = ({ role, content }: Props) => {
   const isUser = role === "user";
 
   return (
-    <div className={`flex gap-4 ${isUser ? "justify-end" : ""}`}>
+    <div className={clsx("flex gap-4", { "justify-end": isUser })}>
       {!isUser && (
         <div className="bg-accent text-accent-content w-8 h-8 rounded-full flex items-center justify-center shrink-0">
           <Bot size={18} />
@@ -17,13 +19,16 @@ const ChatMessage = ({ role, content }: Props) => {
       )}
 
       <div
-        className={`max-w-[80%] rounded-xl px-4 py-3 ${
+        className={clsx(
+          "max-w-4/5 rounded-xl px-4 py-3",
           isUser
             ? "bg-accent text-accent-content"
             : "bg-base-200 text-base-content"
-        }`}
+        )}
       >
-        <p className="text-sm leading-relaxed">{content}</p>
+        <div className="text-sm leading-relaxed prose prose-sm max-w-none prose-invert">
+          <ReactMarkdown>{content}</ReactMarkdown>
+        </div>
       </div>
 
       {isUser && (

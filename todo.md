@@ -1,0 +1,3 @@
+- Login history
+- Limit AI prompts
+- Admin only features (a system so new fragrances get their addition pending until admin approves)
