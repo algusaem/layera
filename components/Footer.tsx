@@ -1,4 +1,4 @@
-import { Code } from "lucide-react";
+import { Code, FileText } from "lucide-react";
 import Link from "next/link";
 import PerfumeBottleIcon from "./PerfumeBottleIcon";
 
@@ -45,7 +45,14 @@ const Footer = () => {
             </div>
 
             <div className="flex flex-col gap-3">
-              <h4 className="font-semibold text-sm">Open Source</h4>
+              <h4 className="font-semibold text-sm">Resources</h4>
+              <Link
+                href="/changelog"
+                className="text-sm text-secondary/50 hover:text-accent transition-colors flex items-center gap-1"
+              >
+                <FileText size={14} />
+                Changelog
+              </Link>
               <a
                 href="https://github.com/algusaem/layera"
                 target="_blank"
