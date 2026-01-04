@@ -3,16 +3,29 @@ import Link from "next/link";
 import { auth } from "@/lib/auth";
 import UserAvatar from "./UserAvatar";
 
-const NavLink = ({ children, href }: { children: string; href: string }) => (
+const NavLink = ({
+  children,
+  href,
+  mobile = false,
+}: {
+  children: string;
+  href: string;
+  mobile?: boolean;
+}) => (
   <Link
     href={href}
-    className="text-lg lg:text-base hover:text-accent transition-colors"
+    className={
+      mobile
+        ? "btn btn-ghost justify-start text-lg"
+        : "text-lg lg:text-base hover:text-accent transition-colors"
+    }
   >
     {children}
   </Link>
 );
 
 const links = [
+  { href: "/", label: "Home" },
   { href: "/ask", label: "Find your scent" },
   { href: "/collection", label: "Collection" },
 ];
@@ -22,13 +35,23 @@ const Navbar = async () => {
   const user = session?.user;
 
   return (
-    <div className="drawer">
+    <div className="drawer drawer-end">
       <input id="nav-drawer" type="checkbox" className="drawer-toggle" />
 
       <div className="drawer-content flex justify-center w-full">
         {/* Navbar */}
         <nav className="navbar border-b border-base-content/20 max-w-6xl w-full px-4">
           <div className="flex items-center justify-center w-full">
+            {/* Logo */}
+            <div className="flex-1 w-full flex justify-start">
+              <Link
+                href="/"
+                className="text-xl hover:text-accent transition-colors bg-transparent"
+              >
+                Layera
+              </Link>
+            </div>
+
             {/* Mobile menu button */}
             <div className="flex-none lg:hidden">
               <label
@@ -38,16 +61,6 @@ const Navbar = async () => {
               >
                 <Menu size={24} />
               </label>
-            </div>
-
-            {/* Logo */}
-            <div className="flex-1 w-full flex justify-center lg:justify-start">
-              <Link
-                href="/"
-                className="text-xl hover:text-accent transition-colors bg-transparent"
-              >
-                Layera
-              </Link>
             </div>
 
             {/* Desktop menu */}
@@ -77,13 +90,10 @@ const Navbar = async () => {
           className="drawer-overlay"
         />
         <div className="min-h-full w-72 bg-base-200 p-6">
-          {/* Drawer header */}
-          <p className="text-xl mb-8">Layera</p>
-
           {/* Drawer menu */}
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-2">
             {links.map((link) => (
-              <NavLink key={link.href} href={link.href}>
+              <NavLink key={link.href} href={link.href} mobile>
                 {link.label}
               </NavLink>
             ))}
@@ -93,7 +103,9 @@ const Navbar = async () => {
               {user ? (
                 <UserAvatar name={user.name} email={user.email} />
               ) : (
-                <NavLink href="/collection/login">Log In</NavLink>
+                <NavLink href="/collection/login" mobile>
+                  Log In
+                </NavLink>
               )}
             </div>
           </div>

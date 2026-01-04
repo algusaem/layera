@@ -19,7 +19,7 @@ export const authConfig: NextAuthConfig = {
     },
     authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user;
-      const protectedRoutes = ["/collection", "/collection/add"];
+      const protectedRoutes = ["/collection", "/collection/add", "/ask"];
       const authRoutes = ["/collection/login", "/collection/register"];
 
       const isProtectedRoute = protectedRoutes.some(
