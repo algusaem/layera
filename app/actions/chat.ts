@@ -32,7 +32,7 @@ export async function sendMessage(messages: Message[], newMessage: string) {
           perfume: {
             select: {
               name: true,
-              brand: true,
+              brand: { select: { name: true } },
             },
           },
         },
@@ -40,7 +40,7 @@ export async function sendMessage(messages: Message[], newMessage: string) {
 
       if (userPerfumes.length > 0) {
         const perfumeList = userPerfumes
-          .map((up) => `${up.perfume.brand} - ${up.perfume.name}`)
+          .map((up) => `${up.perfume.brand.name} - ${up.perfume.name}`)
           .join(", ");
         collectionInfo = `\n\nUser's collection: ${perfumeList}`;
       }

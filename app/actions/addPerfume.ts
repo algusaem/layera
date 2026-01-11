@@ -6,14 +6,14 @@ import { uploadImage, deleteImage } from "./uploadImage";
 
 type AddPerfumeData = {
   name: string;
-  brand: string;
+  brandId: string;
 };
 
 export async function addPerfume(data: AddPerfumeData, formData: FormData) {
   const name = data.name.trim();
-  const brand = data.brand.trim();
+  const brandId = data.brandId;
 
-  if (!name || !brand) {
+  if (!name || !brandId) {
     return { error: "Name and brand are required" };
   }
 
@@ -24,11 +24,12 @@ export async function addPerfume(data: AddPerfumeData, formData: FormData) {
 
   const existingPerfume = await prisma.perfume.findFirst({
     where: { name: { equals: name, mode: "insensitive" } },
+    include: { brand: true },
   });
 
   if (existingPerfume) {
     return {
-      error: `A perfume named "${existingPerfume.name}" already exists (by ${existingPerfume.brand})`,
+      error: `A perfume named "${existingPerfume.name}" already exists (by ${existingPerfume.brand.name})`,
     };
   }
 
@@ -46,7 +47,7 @@ export async function addPerfume(data: AddPerfumeData, formData: FormData) {
     await prisma.perfume.create({
       data: {
         name,
-        brand,
+        brandId,
         imageUrl,
       },
     });

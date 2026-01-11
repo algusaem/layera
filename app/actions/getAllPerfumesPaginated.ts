@@ -22,7 +22,7 @@ export async function getAllPerfumesPaginated({
       ? {
           OR: [
             { name: { contains: search, mode: "insensitive" as const } },
-            { brand: { contains: search, mode: "insensitive" as const } },
+            { brand: { name: { contains: search, mode: "insensitive" as const } } },
           ],
         }
       : {}),
@@ -33,18 +33,23 @@ export async function getAllPerfumesPaginated({
       where,
       skip,
       take: limit,
-      orderBy: [{ brand: "asc" }, { name: "asc" }],
+      orderBy: [{ brand: { name: "asc" } }, { name: "asc" }],
       select: {
         id: true,
         name: true,
-        brand: true,
+        brand: { select: { name: true } },
         imageUrl: true,
       },
     }),
     prisma.perfume.count({ where }),
   ]);
 
-  const perfumes = perfumesRaw as Perfume[];
+  const perfumes = perfumesRaw.map((p) => ({
+    id: p.id,
+    name: p.name,
+    brand: p.brand.name,
+    imageUrl: p.imageUrl!,
+  })) as Perfume[];
 
   return {
     perfumes,

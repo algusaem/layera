@@ -17,7 +17,7 @@ export async function getUserCollection() {
         select: {
           id: true,
           name: true,
-          brand: true,
+          brand: { select: { name: true } },
           imageUrl: true,
         },
       },
@@ -25,5 +25,10 @@ export async function getUserCollection() {
     orderBy: { addedAt: "desc" },
   });
 
-  return userPerfumes.map((up) => up.perfume as Perfume);
+  return userPerfumes.map((up) => ({
+    id: up.perfume.id,
+    name: up.perfume.name,
+    brand: up.perfume.brand.name,
+    imageUrl: up.perfume.imageUrl!,
+  })) as Perfume[];
 }

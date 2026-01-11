@@ -1,14 +1,20 @@
 "use client";
 
 import { addPerfume } from "@/app/actions/addPerfume";
+import { getBrands } from "@/app/actions/getBrands";
 import { useForm, UseFormRegister, FieldError } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ImageUpload from "../ImageUpload";
 
+type Brand = {
+  id: string;
+  name: string;
+};
+
 type PerfumeFormData = {
-  brand: string;
+  brandId: string;
   name: string;
 };
 
@@ -46,6 +52,11 @@ const FormInput = ({
 const AddPerfumeForm = () => {
   const router = useRouter();
   const [imageFile, setImageFile] = useState<File | null>(null);
+  const [brands, setBrands] = useState<Brand[]>([]);
+
+  useEffect(() => {
+    getBrands().then(setBrands);
+  }, []);
 
   const {
     register,
@@ -75,13 +86,26 @@ const AddPerfumeForm = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-2 max-w-md">
-      <FormInput
-        label="Brand"
-        placeholder="e.g. Dior, Chanel, Tom Ford"
-        name="brand"
-        register={register}
-        error={errors.brand}
-      />
+      <fieldset className="fieldset">
+        <legend className="fieldset-legend text-base">Brand</legend>
+        <select
+          className="select select-bordered w-full"
+          {...register("brandId", { required: "Brand is required" })}
+          defaultValue=""
+        >
+          <option value="" disabled>
+            Select a brand
+          </option>
+          {brands.map((brand) => (
+            <option key={brand.id} value={brand.id}>
+              {brand.name}
+            </option>
+          ))}
+        </select>
+        {errors.brandId && (
+          <p className="text-error text-sm mt-1">{errors.brandId.message}</p>
+        )}
+      </fieldset>
 
       <FormInput
         label="Perfume Name"

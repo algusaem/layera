@@ -1,16 +1,29 @@
+model Brand {
+  id        String    @id @default(cuid())
+  name      String    @unique
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  // Relations
+  perfumes Perfume[]
+
+  @@map("brands")
+}
+
 model Perfume {
   id        String   @id @default(cuid())
   name      String
-  brand     String
+  brandId   String
   imageUrl  String? // URL to image (recommend storing in Cloudinary/S3/Vercel Blob)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   // Relations
+  brand         Brand          @relation(fields: [brandId], references: [id])
   userPerfumes  UserPerfume[]
   layerPerfumes LayerPerfume[]
 
-  @@unique([name, brand]) // Prevent duplicate perfume entries
+  @@unique([name, brandId]) // Prevent duplicate perfume entries
   @@map("perfumes")
 }
 
