@@ -11,7 +11,10 @@ export async function getUserCollection() {
   }
 
   const userPerfumes = await prisma.userPerfume.findMany({
-    where: { userId: session.user.id },
+    where: {
+      userId: session.user.id,
+      perfume: { status: "APPROVED" },
+    },
     include: {
       perfume: {
         select: {

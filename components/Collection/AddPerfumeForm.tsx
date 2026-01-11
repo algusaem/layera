@@ -82,7 +82,11 @@ const AddPerfumeForm = () => {
       return;
     }
 
-    toast.success("Perfume added successfully!");
+    if (result.pending) {
+      toast.success("Perfume submitted for review!");
+    } else {
+      toast.success("Perfume added successfully!");
+    }
     router.push("/collection");
   };
 

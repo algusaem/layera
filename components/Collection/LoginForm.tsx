@@ -31,7 +31,7 @@ const LoginForm = () => {
     }
 
     toast.success("Welcome back!");
-    router.push("/collection");
+    router.push(result.role === "ADMIN" ? "/admin" : "/collection");
   };
 
   const handleDemoLogin = async () => {

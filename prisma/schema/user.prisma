@@ -14,9 +14,10 @@ model User {
   updatedAt DateTime @updatedAt
 
   // Relations
-  sessions   Session[]
-  collection UserPerfume[]
-  layers     Layer[]
+  sessions           Session[]
+  collection         UserPerfume[]
+  layers             Layer[]
+  submittedPerfumes  Perfume[]
 
   @@map("users")
 }

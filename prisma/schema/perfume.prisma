@@ -1,3 +1,9 @@
+enum PerfumeStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
 model Brand {
   id        String    @id @default(cuid())
   name      String    @unique
@@ -11,15 +17,18 @@ model Brand {
 }
 
 model Perfume {
-  id        String   @id @default(cuid())
-  name      String
-  brandId   String
-  imageUrl  String? // URL to image (recommend storing in Cloudinary/S3/Vercel Blob)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id           String        @id @default(cuid())
+  name         String
+  brandId      String
+  imageUrl     String?
+  status       PerfumeStatus @default(PENDING)
+  submittedBy  String?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
 
   // Relations
   brand         Brand          @relation(fields: [brandId], references: [id])
+  submitter     User?          @relation(fields: [submittedBy], references: [id], onDelete: SetNull)
   userPerfumes  UserPerfume[]
   layerPerfumes LayerPerfume[]
 

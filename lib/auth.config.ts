@@ -34,7 +34,8 @@ export const authConfig: NextAuthConfig = {
 
       // Redirect logged-in users away from auth pages
       if (isAuthRoute && isLoggedIn) {
-        return Response.redirect(new URL("/collection", nextUrl));
+        const redirectUrl = auth?.user?.role === "ADMIN" ? "/admin" : "/collection";
+        return Response.redirect(new URL(redirectUrl, nextUrl));
       }
 
       // Redirect non-logged-in users to login

@@ -1,4 +1,4 @@
-import { Menu, Home, Sparkles, Library, LogIn } from "lucide-react";
+import { Menu, Home, Sparkles, Library, LogIn, Shield } from "lucide-react";
 import Link from "next/link";
 import { auth } from "@/lib/auth";
 import UserAvatar from "./UserAvatar";
@@ -51,6 +51,7 @@ const links = [
 const Navbar = async () => {
   const session = await auth();
   const user = session?.user;
+  const isAdmin = user?.role === "ADMIN";
 
   return (
     <div className="drawer drawer-end">
@@ -89,6 +90,12 @@ const Navbar = async () => {
                 </NavLink>
               ))}
 
+              {isAdmin && (
+                <NavLink href="/admin" icon={Shield}>
+                  Admin
+                </NavLink>
+              )}
+
               {/* Auth section */}
               {user ? (
                 <UserAvatar name={user.name} email={user.email} />
@@ -125,6 +132,12 @@ const Navbar = async () => {
                 {link.label}
               </NavLink>
             ))}
+
+            {isAdmin && (
+              <NavLink href="/admin" mobile icon={Shield}>
+                Admin
+              </NavLink>
+            )}
 
             {/* Auth section for mobile */}
             <div className="mt-4 pt-4 border-t border-base-content/10">

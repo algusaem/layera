@@ -2,14 +2,21 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
+import { auth } from "@/lib/auth";
 import { uploadImage, deleteImage } from "./uploadImage";
 
-type AddPerfumeData = {
+interface AddPerfumeData {
   name: string;
   brandId: string;
-};
+}
 
 export async function addPerfume(data: AddPerfumeData, formData: FormData) {
+  const session = await auth();
+  if (!session?.user?.id) {
+    return { error: "You must be logged in to add a perfume" };
+  }
+
+  const isAdmin = session.user.role === "ADMIN";
   const name = data.name.trim();
   const brandId = data.brandId;
 
@@ -49,10 +56,15 @@ export async function addPerfume(data: AddPerfumeData, formData: FormData) {
         name,
         brandId,
         imageUrl,
+        status: isAdmin ? "APPROVED" : "PENDING",
+        submittedBy: session.user.id,
       },
     });
 
-    return { success: true };
+    return {
+      success: true,
+      pending: !isAdmin,
+    };
   } catch (error: any) {
     // Rollback: delete uploaded image if database operation fails
     if (imageUrl) {

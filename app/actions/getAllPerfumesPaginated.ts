@@ -18,6 +18,7 @@ export async function getAllPerfumesPaginated({
 
   const where = {
     imageUrl: { not: null },
+    status: "APPROVED" as const,
     ...(search
       ? {
           OR: [

@@ -30,7 +30,9 @@ export async function login(data: LoginData) {
       password,
       redirect: false,
     });
-    return { success: true };
+
+    const session = await auth();
+    return { success: true, role: session?.user?.role };
   } catch (error) {
     if (error instanceof AuthError) {
       return { error: "Invalid email or password" };
