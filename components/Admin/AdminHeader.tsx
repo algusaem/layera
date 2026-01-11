@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import Link from "next/link";
-import { ClipboardCheck, History, LucideIcon } from "lucide-react";
+import { ClipboardCheck, History, Droplets, LucideIcon } from "lucide-react";
 
 interface NavItem {
   href: string;
@@ -11,6 +11,7 @@ interface NavItem {
 
 const navItems: NavItem[] = [
   { href: "/admin", label: "Review", key: "review", icon: ClipboardCheck },
+  { href: "/admin/perfumes", label: "Perfumes", key: "perfumes", icon: Droplets },
   { href: "/admin/history", label: "Log History", key: "history", icon: History },
 ];
 
