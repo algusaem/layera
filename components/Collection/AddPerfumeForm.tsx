@@ -6,6 +6,8 @@ import { useForm, UseFormRegister, FieldError } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { useState, useEffect } from "react";
+import { Plus } from "lucide-react";
+import Link from "next/link";
 import ImageUpload from "../ImageUpload";
 
 type Brand = {
@@ -88,20 +90,27 @@ const AddPerfumeForm = () => {
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-2 max-w-md">
       <fieldset className="fieldset">
         <legend className="fieldset-legend text-base">Brand</legend>
-        <select
-          className="select select-bordered w-full"
-          {...register("brandId", { required: "Brand is required" })}
-          defaultValue=""
-        >
-          <option value="" disabled>
-            Select a brand
-          </option>
-          {brands.map((brand) => (
-            <option key={brand.id} value={brand.id}>
-              {brand.name}
+        <div className="flex gap-2">
+          <select
+            className="select select-bordered flex-1"
+            {...register("brandId", { required: "Brand is required" })}
+            defaultValue=""
+          >
+            <option value="" disabled>
+              Select a brand
             </option>
-          ))}
-        </select>
+            {brands.map((brand) => (
+              <option key={brand.id} value={brand.id}>
+                {brand.name}
+              </option>
+            ))}
+          </select>
+          <div className="tooltip tooltip-accent" data-tip="Add new brand">
+            <Link href="/collection/add/brand" className="btn bg-base-100 border-base-content/20">
+              <Plus className="w-4 h-4" />
+            </Link>
+          </div>
+        </div>
         {errors.brandId && (
           <p className="text-error text-sm mt-1">{errors.brandId.message}</p>
         )}
