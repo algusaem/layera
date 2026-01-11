@@ -1,4 +1,6 @@
 import type { NextAuthConfig } from "next-auth";
+import { prisma } from "./prisma";
+import crypto from "crypto";
 
 export const authConfig: NextAuthConfig = {
   pages: {
@@ -45,5 +47,28 @@ export const authConfig: NextAuthConfig = {
   providers: [], // Providers added in auth.ts
   session: {
     strategy: "jwt",
+  },
+  events: {
+    async signIn({ user }) {
+      if (user.id) {
+        const token = crypto.randomBytes(32).toString("hex");
+        const expiresAt = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000); // 30 days
+
+        await prisma.session.create({
+          data: {
+            userId: user.id,
+            token,
+            expiresAt,
+          },
+        });
+      }
+    },
+    async signOut(message) {
+      if ("token" in message && message.token?.id) {
+        await prisma.session.deleteMany({
+          where: { userId: message.token.id as string },
+        });
+      }
+    },
   },
 };
