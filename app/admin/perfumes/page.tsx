@@ -4,9 +4,7 @@ import SectionContainer from "@/components/Main/SectionContainer";
 import Navbar from "@/components/Navbar";
 import AdminHeader from "@/components/Admin/AdminHeader";
 import AdminPerfumeCard from "@/components/Admin/AdminPerfumeCard";
-import Link from "next/link";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import clsx from "clsx";
+import Pagination from "@/components/Pagination";
 
 interface Props {
   searchParams: Promise<{ page?: string }>;
@@ -38,33 +36,11 @@ export default async function AdminPerfumes({ searchParams }: Props) {
                 ))}
               </div>
 
-              <div className="flex justify-end">
-                <div className="join border border-base-content/10">
-                  <Link
-                    href={`/admin/perfumes?page=${page - 1}`}
-                    className={clsx(
-                      "join-item btn btn-sm btn-accent btn-ghost",
-                      page <= 1 &&
-                        "text-gray-500/40 cursor-not-allowed hover:bg-transparent hover:border-transparent"
-                    )}
-                  >
-                    <ChevronLeft size={16} />
-                  </Link>
-                  <span className="join-item btn btn-sm btn-ghost pointer-events-none font-medium">
-                    {page} / {pagination.totalPages || 1}
-                  </span>
-                  <Link
-                    href={`/admin/perfumes?page=${page + 1}`}
-                    className={clsx(
-                      "join-item btn btn-sm btn-accent btn-ghost",
-                      page >= pagination.totalPages &&
-                        "text-gray-500/40 cursor-not-allowed hover:bg-transparent hover:border-transparent"
-                    )}
-                  >
-                    <ChevronRight size={16} />
-                  </Link>
-                </div>
-              </div>
+              <Pagination
+                page={page}
+                totalPages={pagination.totalPages}
+                basePath="/admin/perfumes"
+              />
             </>
           ) : (
             <div className="text-center py-12">

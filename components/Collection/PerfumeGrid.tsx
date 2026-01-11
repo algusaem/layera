@@ -1,58 +1,21 @@
-import Link from "next/link";
-import { ChevronLeft, ChevronRight, Search } from "lucide-react";
+import { Search } from "lucide-react";
 import PerfumeCard from "./PerfumeCard";
+import Pagination from "../Pagination";
 import type { Perfume, PaginationData } from "@/types";
 import NoPerfume from "../NoPerfume";
-import clsx from "clsx";
 
-type Props = {
+interface Props {
   perfumes: Perfume[];
   pagination: PaginationData;
   basePath?: string;
   userCollectionIds?: string[];
-};
+}
 
 const SearchBar = () => (
   <label className="input w-full border-base-content/10 bg-base-200">
     <Search size={20} className="text-secondary/40" />
     <input type="search" required placeholder="Search" />
   </label>
-);
-
-const Pagination = ({
-  page,
-  totalPages,
-  basePath,
-}: PaginationData & { basePath: string }) => (
-  <div className="flex justify-end">
-    <div className="join border border-base-content/10">
-      <Link
-        href={`${basePath}?page=${page - 1}`}
-        className={clsx(
-          "join-item btn btn-sm btn-accent btn-ghost",
-          page <= 1 &&
-            "text-gray-500/40 cursor-not-allowed hover:bg-transparent hover:border-transparent"
-        )}
-      >
-        <ChevronLeft size={16} />
-      </Link>
-
-      <span className="join-item btn btn-sm btn-ghost pointer-events-none font-medium">
-        {page} / {totalPages || 1}
-      </span>
-
-      <Link
-        href={`${basePath}?page=${page + 1}`}
-        className={clsx(
-          "join-item btn btn-sm btn-accent btn-ghost",
-          page >= totalPages &&
-            "text-gray-500/40 cursor-not-allowed hover:bg-transparent hover:border-transparent"
-        )}
-      >
-        <ChevronRight size={16} />
-      </Link>
-    </div>
-  </div>
 );
 
 const PerfumeGrid = ({
