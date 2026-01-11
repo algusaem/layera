@@ -1,2 +1,1 @@
-- Limit AI prompts (track them and limit them)
 - Import from Fragrantica

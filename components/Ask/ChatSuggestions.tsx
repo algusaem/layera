@@ -1,6 +1,7 @@
-type Props = {
+interface Props {
   onSuggestionClick: (suggestion: string) => void;
-};
+  disabled?: boolean;
+}
 
 const suggestions = [
   {
@@ -21,13 +22,14 @@ const suggestions = [
   },
 ];
 
-const ChatSuggestions = ({ onSuggestionClick }: Props) => {
+const ChatSuggestions = ({ onSuggestionClick, disabled }: Props) => {
   return (
     <div className="grid grid-cols-2 gap-3 w-full max-w-md">
       {suggestions.map((suggestion) => (
         <button
           key={suggestion.label}
           onClick={() => onSuggestionClick(suggestion.prompt)}
+          disabled={disabled}
           className="btn btn-outline btn-accent"
         >
           {suggestion.label}

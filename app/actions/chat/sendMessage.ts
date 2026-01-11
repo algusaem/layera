@@ -3,6 +3,7 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { getPromptUsage } from "@/app/actions/prompt/getPromptUsage";
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
 
@@ -19,6 +20,16 @@ export async function sendMessage(messages: Message[], newMessage: string) {
   if (!process.env.GEMINI_API_KEY) {
     console.error("GEMINI_API_KEY is not set");
     return { error: "API key not configured" };
+  }
+
+  // Check rate limit for logged-in users
+  const usage = await getPromptUsage();
+  if (usage.isLimited) {
+    return {
+      error: "Rate limit exceeded",
+      rateLimited: true,
+      resetAt: usage.resetAt,
+    };
   }
 
   try {
@@ -66,6 +77,13 @@ Only discuss fragrances - politely decline other topics.${collectionInfo}`
 
     const result = await chat.sendMessage(newMessage);
     const response = result.response.text();
+
+    // Record prompt usage for logged-in users
+    if (session?.user?.id) {
+      await prisma.promptUsage.create({
+        data: { userId: session.user.id },
+      });
+    }
 
     return { response };
   } catch (error) {
