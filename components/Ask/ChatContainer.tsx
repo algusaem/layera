@@ -7,7 +7,7 @@ import ChatLoading from "./ChatLoading";
 import ChatSuggestions from "./ChatSuggestions";
 import { useScrollToBottom } from "./useScrollToBottom";
 import { Sparkles } from "lucide-react";
-import { sendMessage } from "@/app/actions/chat";
+import { sendMessage } from "@/app/actions/chat/sendMessage";
 import { toast } from "sonner";
 
 type Message = {

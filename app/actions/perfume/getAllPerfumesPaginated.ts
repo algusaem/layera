@@ -3,11 +3,11 @@
 import { prisma } from "@/lib/prisma";
 import type { Perfume } from "@/types";
 
-type GetPerfumesParams = {
+interface GetPerfumesParams {
   page?: number;
   limit?: number;
   search?: string;
-};
+}
 
 export async function getAllPerfumesPaginated({
   page = 1,

@@ -2,7 +2,8 @@
 
 import Image from "next/image";
 import { Check, X } from "lucide-react";
-import { approvePerfume, rejectPerfume } from "@/app/actions/admin";
+import { approvePerfume } from "@/app/actions/admin/approvePerfume";
+import { rejectPerfume } from "@/app/actions/admin/rejectPerfume";
 import { toast } from "sonner";
 import { useTransition } from "react";
 

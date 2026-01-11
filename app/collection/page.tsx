@@ -2,7 +2,7 @@ import SectionContainer from "@/components/Main/SectionContainer";
 import Navbar from "@/components/Navbar";
 import Header from "@/components/Collection/Header";
 import PerfumeCard from "@/components/Collection/PerfumeCard";
-import { getUserCollection } from "@/app/actions/getUserCollection";
+import { getUserCollection } from "@/app/actions/collection/getUserCollection";
 
 export default async function Collection() {
   const perfumes = await getUserCollection();

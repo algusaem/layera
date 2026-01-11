@@ -1,5 +1,5 @@
-import { requireAdmin } from "@/app/actions/auth";
-import { getPendingPerfumes } from "@/app/actions/admin";
+import { requireAdmin } from "@/app/actions/auth/requireAdmin";
+import { getPendingPerfumes } from "@/app/actions/admin/getPendingPerfumes";
 import SectionContainer from "@/components/Main/SectionContainer";
 import Navbar from "@/components/Navbar";
 import AdminHeader from "@/components/Admin/AdminHeader";

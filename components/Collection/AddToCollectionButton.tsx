@@ -1,8 +1,8 @@
 "use client";
 
 import { Plus, Check } from "lucide-react";
-import { addToCollection } from "@/app/actions/addToCollection";
-import { removeFromCollection } from "@/app/actions/removeFromCollection";
+import { addToCollection } from "@/app/actions/collection/addToCollection";
+import { removeFromCollection } from "@/app/actions/collection/removeFromCollection";
 import { toast } from "sonner";
 import { useTransition } from "react";
 

@@ -6,10 +6,10 @@ import { prisma } from "@/lib/prisma";
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
 
-type Message = {
+interface Message {
   role: "user" | "assistant";
   content: string;
-};
+}
 
 export async function sendMessage(messages: Message[], newMessage: string) {
   if (!newMessage.trim()) {

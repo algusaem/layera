@@ -1,7 +1,7 @@
 "use client";
 
-import { addPerfume } from "@/app/actions/addPerfume";
-import { getBrands } from "@/app/actions/getBrands";
+import { addPerfume } from "@/app/actions/perfume/addPerfume";
+import { getBrands } from "@/app/actions/brand/getBrands";
 import { useForm, UseFormRegister, FieldError } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";

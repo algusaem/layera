@@ -3,7 +3,8 @@
 
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
-import { uploadImage, deleteImage } from "./uploadImage";
+import { uploadImage } from "@/app/actions/image/uploadImage";
+import { deleteImage } from "@/app/actions/image/deleteImage";
 
 interface AddPerfumeData {
   name: string;

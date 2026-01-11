@@ -3,7 +3,7 @@
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { login } from "@/app/actions/auth";
+import { login } from "@/app/actions/auth/login";
 import Link from "next/link";
 import { FlaskConical, LogIn } from "lucide-react";
 

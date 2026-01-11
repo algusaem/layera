@@ -3,7 +3,7 @@
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { register as registerUser } from "@/app/actions/auth";
+import { register as registerUser } from "@/app/actions/auth/register";
 import Link from "next/link";
 
 type RegisterFormData = {

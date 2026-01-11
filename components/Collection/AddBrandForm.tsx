@@ -1,6 +1,6 @@
 "use client";
 
-import { addBrand } from "@/app/actions/addBrand";
+import { addBrand } from "@/app/actions/brand/addBrand";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";

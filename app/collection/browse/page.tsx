@@ -1,5 +1,5 @@
-import { getAllPerfumesPaginated } from "@/app/actions/getAllPerfumesPaginated";
-import { getUserCollectionIds } from "@/app/actions/getUserCollectionIds";
+import { getAllPerfumesPaginated } from "@/app/actions/perfume/getAllPerfumesPaginated";
+import { getUserCollectionIds } from "@/app/actions/collection/getUserCollectionIds";
 import Header from "@/components/Collection/Header";
 import PerfumeGrid from "@/components/Collection/PerfumeGrid";
 import SectionContainer from "@/components/Main/SectionContainer";
