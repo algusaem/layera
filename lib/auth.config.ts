@@ -1,6 +1,5 @@
 import type { NextAuthConfig } from "next-auth";
 import { prisma } from "./prisma";
-import crypto from "crypto";
 
 export const authConfig: NextAuthConfig = {
   pages: {
@@ -8,14 +7,16 @@ export const authConfig: NextAuthConfig = {
   },
   callbacks: {
     async jwt({ token, user }) {
-      if (user) {
+      if (user?.id) {
         token.id = user.id;
+        token.role = user.role;
       }
       return token;
     },
     async session({ session, token }) {
       if (session.user) {
         session.user.id = token.id as string;
+        session.user.role = token.role as "USER" | "ADMIN";
       }
       return session;
     },
@@ -51,7 +52,9 @@ export const authConfig: NextAuthConfig = {
   events: {
     async signIn({ user }) {
       if (user.id) {
-        const token = crypto.randomBytes(32).toString("hex");
+        const array = new Uint8Array(32);
+        globalThis.crypto.getRandomValues(array);
+        const token = Array.from(array, (b) => b.toString(16).padStart(2, "0")).join("");
         const expiresAt = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000); // 30 days
 
         await prisma.session.create({

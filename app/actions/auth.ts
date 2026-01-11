@@ -100,3 +100,19 @@ export async function requireAuth() {
   }
   return session;
 }
+
+export async function isAdmin() {
+  const session = await auth();
+  return session?.user?.role === "ADMIN";
+}
+
+export async function requireAdmin() {
+  const session = await auth();
+  if (!session) {
+    redirect("/collection/login");
+  }
+  if (session.user.role !== "ADMIN") {
+    redirect("/collection");
+  }
+  return session;
+}
