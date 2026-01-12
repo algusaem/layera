@@ -1,19 +1,21 @@
 "use client";
 
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { login } from "@/app/actions/auth/login";
 import Link from "next/link";
-import { FlaskConical, LogIn } from "lucide-react";
+import { FlaskConical, LogIn, Eye, EyeOff } from "lucide-react";
 
-type LoginFormData = {
+interface LoginFormData {
   email: string;
   password: string;
-};
+}
 
 const LoginForm = () => {
   const router = useRouter();
+  const [showPassword, setShowPassword] = useState(false);
 
   const {
     register,
@@ -59,12 +61,21 @@ const LoginForm = () => {
 
       <fieldset className="fieldset">
         <legend className="fieldset-legend text-base">Password</legend>
-        <input
-          type="password"
-          placeholder="Your password"
-          className="input input-bordered w-full"
-          {...register("password", { required: "Password is required" })}
-        />
+        <div className="relative">
+          <input
+            type={showPassword ? "text" : "password"}
+            placeholder="Your password"
+            className="input input-bordered w-full pr-10"
+            {...register("password", { required: "Password is required" })}
+          />
+          <button
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-secondary/50 hover:text-secondary"
+          >
+            {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+          </button>
+        </div>
         {errors.password && (
           <p className="text-error text-sm mt-1">{errors.password.message}</p>
         )}
