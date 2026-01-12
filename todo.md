@@ -1,5 +1,4 @@
 - Import from Fragrantica
-- Password reset
 - Unit Tests (Jest)
 - Integration Tests (Vitest)
 - End-to-End Tests (Playwright, Cypress)
