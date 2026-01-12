@@ -68,6 +68,14 @@ const LoginForm = () => {
         {errors.password && (
           <p className="text-error text-sm mt-1">{errors.password.message}</p>
         )}
+        <div className="text-right mt-1">
+          <Link
+            href="/collection/forgot-password"
+            className="text-sm text-accent hover:underline"
+          >
+            Forgot password?
+          </Link>
+        </div>
       </fieldset>
 
       <button

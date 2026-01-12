@@ -1,2 +1,1 @@
 - Import from Fragrantica
-- Password reset

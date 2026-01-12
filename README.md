@@ -25,6 +25,7 @@ Layera is an AI-powered web application for discovering and creating perfume lay
 | Forms          | React Hook Form               |
 | Notifications  | Sonner                        |
 | Icons          | Lucide React                  |
+| Email          | Resend                        |
 
 ## Prerequisites
 
@@ -33,6 +34,7 @@ Layera is an AI-powered web application for discovering and creating perfume lay
 - PostgreSQL database (or [Neon](https://neon.tech) account)
 - [Cloudinary](https://cloudinary.com) account
 - [Google AI Studio](https://aistudio.google.com) API key
+- [Resend](https://resend.com) account (for password reset emails)
 
 ## Getting Started
 
@@ -67,6 +69,10 @@ CLOUDINARY_API_SECRET="your-api-secret"
 
 # Google AI
 GEMINI_API_KEY="your-gemini-api-key"
+
+# Email (Resend)
+RESEND_API_KEY="your-resend-api-key"
+RESEND_FROM_EMAIL="noreply@yourdomain.com"
 ```
 
 #### Getting the credentials:
@@ -75,6 +81,8 @@ GEMINI_API_KEY="your-gemini-api-key"
 - **AUTH_SECRET**: Generate with `openssl rand -base64 32`
 - **Cloudinary**: Get credentials from [Cloudinary Console](https://console.cloudinary.com)
 - **GEMINI_API_KEY**: Get from [Google AI Studio](https://aistudio.google.com/apikey)
+- **RESEND_API_KEY**: Get from [Resend Dashboard](https://resend.com/api-keys)
+- **RESEND_FROM_EMAIL**: Your verified domain email (or use `onboarding@resend.dev` for testing)
 
 ### 4. Set up the database
 
