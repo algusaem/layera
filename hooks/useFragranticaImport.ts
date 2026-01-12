@@ -1,5 +1,6 @@
 import { addPerfume } from "@/app/actions/perfume/addPerfume";
-import { addBrand } from "@/app/actions/brand/addBrand";
+import { getOrCreateBrand } from "@/app/actions/brand/getOrCreateBrand";
+import { checkPerfumeExists } from "@/app/actions/perfume/checkPerfumeExists";
 import { fetchFragranticaData } from "@/app/actions/fragrantica/fetchFragranticaData";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -49,16 +50,29 @@ export function useFragranticaImport({
 
     const result = await fetchFragranticaData(fragranticaUrl);
 
-    setIsFetching(false);
-
     if (result.error) {
+      setIsFetching(false);
       setFetchError(result.error);
       return;
     }
 
     if (result.data) {
+      // Check if perfume already exists
+      const existsResult = await checkPerfumeExists(result.data.name);
+
+      setIsFetching(false);
+
+      if (existsResult.exists && existsResult.perfume) {
+        setFetchError(
+          `"${existsResult.perfume.name}" already exists (by ${existsResult.perfume.brand})`
+        );
+        return;
+      }
+
       setFragranticaData(result.data);
       toast.success("Data imported from Fragrantica");
+    } else {
+      setIsFetching(false);
     }
   };
 
@@ -74,7 +88,7 @@ export function useFragranticaImport({
     if (!fragranticaData) return;
 
     setIsAddingBrand(true);
-    const result = await addBrand({ name: fragranticaData.brand });
+    const result = await getOrCreateBrand(fragranticaData.brand);
     setIsAddingBrand(false);
 
     if (result.error) {
@@ -86,7 +100,12 @@ export function useFragranticaImport({
       onBrandAdded(result.brand);
       setSelectedBrandId(result.brand.id);
       setShowBrandSelect(false);
-      toast.success(`Brand "${result.brand.name}" added`);
+
+      if (result.created) {
+        toast.success(`Brand "${result.brand.name}" added`);
+      } else {
+        toast.success(`Using existing brand "${result.brand.name}"`);
+      }
     }
   };
 
