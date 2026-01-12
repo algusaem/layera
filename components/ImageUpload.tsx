@@ -4,10 +4,10 @@ import { useState, useRef } from "react";
 import { Upload, X } from "lucide-react";
 import Image from "next/image";
 
-type Props = {
+interface Props {
   onFileChange: (file: File | null) => void;
   label?: string;
-};
+}
 
 const ImageUpload = ({ onFileChange, label = "Image" }: Props) => {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);

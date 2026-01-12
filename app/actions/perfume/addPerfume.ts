@@ -9,9 +9,10 @@ import { deleteImage } from "@/app/actions/image/deleteImage";
 interface AddPerfumeData {
   name: string;
   brandId: string;
+  imageUrl?: string;
 }
 
-export async function addPerfume(data: AddPerfumeData, formData: FormData) {
+export async function addPerfume(data: AddPerfumeData, formData?: FormData) {
   const session = await auth();
   if (!session?.user?.id) {
     return { error: "You must be logged in to add a perfume" };
@@ -25,8 +26,12 @@ export async function addPerfume(data: AddPerfumeData, formData: FormData) {
     return { error: "Name and brand are required" };
   }
 
-  const file = formData.get("image") as File;
-  if (!file || file.size === 0) {
+  // Check if we have either a pre-uploaded URL or a file to upload
+  const hasPreUploadedUrl = !!data.imageUrl;
+  const file = formData?.get("image") as File | null;
+  const hasFile = file && file.size > 0;
+
+  if (!hasPreUploadedUrl && !hasFile) {
     return { error: "Image is required" };
   }
 
@@ -41,15 +46,25 @@ export async function addPerfume(data: AddPerfumeData, formData: FormData) {
     };
   }
 
-  // Upload image
-  const imageFormData = new FormData();
-  imageFormData.append("file", file);
-  const uploadResult = await uploadImage(imageFormData);
+  let imageUrl: string;
+  let shouldDeleteOnError = false;
 
-  if (uploadResult.error) {
-    return { error: uploadResult.error };
+  if (hasPreUploadedUrl) {
+    // Use pre-uploaded URL (from Fragrantica)
+    imageUrl = data.imageUrl!;
+    shouldDeleteOnError = true; // We should still clean up if DB fails
+  } else {
+    // Upload image from file
+    const imageFormData = new FormData();
+    imageFormData.append("file", file!);
+    const uploadResult = await uploadImage(imageFormData);
+
+    if (uploadResult.error) {
+      return { error: uploadResult.error };
+    }
+    imageUrl = uploadResult.url!;
+    shouldDeleteOnError = true;
   }
-  const imageUrl = uploadResult.url!;
 
   try {
     await prisma.perfume.create({
@@ -68,7 +83,7 @@ export async function addPerfume(data: AddPerfumeData, formData: FormData) {
     };
   } catch (error: any) {
     // Rollback: delete uploaded image if database operation fails
-    if (imageUrl) {
+    if (shouldDeleteOnError && imageUrl) {
       await deleteImage(imageUrl);
     }
 

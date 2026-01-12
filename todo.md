@@ -1,4 +1,6 @@
 - Import from Fragrantica
+- Bugged log history time (shows 1 hour difference)
+- Dont let users update repeated brand or perfume names
 - Unit Tests (Jest)
 - Integration Tests (Vitest)
 - End-to-End Tests (Playwright, Cypress)
