@@ -1,4 +1,3 @@
-- Bugged log history time (shows 1 hour difference)
 - Unit Tests (Jest)
 - Integration Tests (Vitest)
 - End-to-End Tests (Playwright, Cypress)
