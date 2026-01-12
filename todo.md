@@ -1,2 +1,10 @@
 - Import from Fragrantica
 - Password reset
+- Testing
+- Unit Tests (Jest)
+- Integration Tests (Vitest)
+- End-to-End Tests (Playwright, Cypress)
+- Component Tests (Storybook)
+- Performance Tests (k6, Artillery)
+- Security Tests
+- Accessibility Tests (Lighthouse)
