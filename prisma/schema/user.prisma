@@ -14,11 +14,12 @@ model User {
   updatedAt DateTime @updatedAt
 
   // Relations
-  sessions           Session[]
-  collection         UserPerfume[]
-  layers             Layer[]
-  submittedPerfumes  Perfume[]
-  promptUsage        PromptUsage[]
+  sessions            Session[]
+  collection          UserPerfume[]
+  layers              Layer[]
+  submittedPerfumes   Perfume[]
+  promptUsage         PromptUsage[]
+  passwordResetTokens PasswordResetToken[]
 
   @@map("users")
 }
@@ -33,4 +34,16 @@ model Session {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("sessions")
+}
+
+model PasswordResetToken {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  userId    String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("password_reset_tokens")
 }
