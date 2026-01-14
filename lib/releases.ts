@@ -2,6 +2,74 @@ import type { Release } from "@/components/Changelog/types";
 
 export const releases: Release[] = [
   {
+    version: "1.2.0",
+    date: "2026-01-14",
+    changes: [
+      {
+        type: "feature",
+        description:
+          "Admin panel with perfume approval workflow, user management, and login history",
+      },
+      {
+        type: "feature",
+        description: "Role-based access control with admin privileges",
+      },
+      {
+        type: "feature",
+        description: "Password reset functionality via email",
+      },
+      {
+        type: "feature",
+        description: "Password visibility toggle on authentication forms",
+      },
+      {
+        type: "feature",
+        description: "Delete perfumes from collection",
+      },
+      {
+        type: "feature",
+        description: "Add new brands to the database",
+      },
+      {
+        type: "feature",
+        description: "Fragrantica import for adding perfumes",
+      },
+      {
+        type: "feature",
+        description: "Unit tests for server actions",
+      },
+      {
+        type: "improvement",
+        description: "Brands normalized into separate database table",
+      },
+      {
+        type: "improvement",
+        description: "Reusable pagination component",
+      },
+      {
+        type: "improvement",
+        description: "Server actions reorganized by domain",
+      },
+      {
+        type: "improvement",
+        description: "Enhanced rate limiting for AI prompts",
+      },
+      {
+        type: "improvement",
+        description: "Session management for sign in/out events",
+      },
+      {
+        type: "improvement",
+        description:
+          "Validation to prevent duplicate brand and perfume names",
+      },
+      {
+        type: "fix",
+        description: "Login history timestamp display",
+      },
+    ],
+  },
+  {
     version: "1.1.0",
     date: "2026-01-04",
     changes: [

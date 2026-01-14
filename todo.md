@@ -1,4 +1,3 @@
-- Unit Tests (Jest)
 - Integration Tests (Vitest)
 - End-to-End Tests (Playwright, Cypress)
 - Component Tests (Storybook)
